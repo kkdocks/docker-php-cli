@@ -27,9 +27,9 @@ RUN apt-get update \
 RUN set -ex \
     && cd /etc/php/7.0/fpm \
     && cat /proc/meminfo | grep Huge \
-    && sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 50M/g' \
+    && sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 20M/g' \
         php.ini \
-    && sed -i 's/post_max_size = 8M/post_max_size = 55M/g' \
+    && sed -i 's/post_max_size = 8M/post_max_size = 25M/g' \
         php.ini \
     && sed -i 's/;opcache.file_cache=/opcache.file_cache=\/tmp/g' \
         php.ini \
