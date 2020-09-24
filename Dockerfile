@@ -2,7 +2,7 @@
 # PHP Dockerfile
 # version 1.1
 #
-FROM 192.168.1.202/library/ubuntu-v1
+FROM 192.168.1.202/base-repos/ubuntu:v3
 MAINTAINER Leo <jiangwenhua@yoyohr.com>
 
 RUN apt-get update \
@@ -62,7 +62,13 @@ RUN set -ex \
         echo; \
         echo '[www]'; \
         echo 'listen = 9000'; \
-    } | tee pool.d/zz-docker.conf
+    } | tee pool.d/zz-docker.conf; \
+        \
+    php -r "copy('https://install.phpcomposer.com/installer', 'composer-setup.php');" \
+        && php composer-setup.php --no-ansi --install-dir=/usr/local/bin --filename=composer \
+        && php -r "unlink('composer-setup.php');" \
+        && composer --version \
+        && php -v
 
 WORKDIR /var/www/html
 
