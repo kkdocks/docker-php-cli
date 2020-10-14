@@ -2,8 +2,10 @@
 # PHP Dockerfile
 # version 1.1
 #
-FROM 192.168.1.202/base-repos/ubuntu:v3
-MAINTAINER Leo <jiangwenhua@yoyohr.com>
+FROM registry.youpin-k8s.net/base-repos/ubuntu:v3
+LABEL maintainer="nekoimi <nekoimime@gmail.com>"
+
+USER root
 
 RUN apt-get update \
     && DEBIAN_FRONTEND="noninteractive" \
