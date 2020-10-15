@@ -7,7 +7,8 @@ LABEL maintainer="nekoimi <nekoimime@gmail.com>"
 
 USER root
 
-RUN (id -u www >/dev/null 2>&1) && userdel www
+RUN (id -u www > /dev/null 2>&1) && userdel www \
+    echo 'done'
 
 RUN groupadd -g 263 \
     && useradd -s /sbin/nologin www -d /var/www/html -g www -u 263 \
