@@ -50,6 +50,10 @@ RUN set -ex \
         pool.d/www.conf \
     && sed -i 's/;pm.max_requests = 500/pm.max_requests = 50000/g' \
         pool.d/www.conf \
+    && sed -i 's/user = www-data/user = www/g' \
+        pool.d/www.conf \
+    && sed -i 's/group = www-data/group = www/g' \
+        pool.d/www.conf \
     && sed -i 's/listen.owner = www-data/listen.owner = www/g' \
         pool.d/www.conf \
     && sed -i 's/listen.group = www-data/listen.group = www/g' \
