@@ -7,7 +7,11 @@ LABEL maintainer="nekoimi <nekoimime@gmail.com>"
 
 USER root
 
-RUN apt-get update \
+RUN (id -u www >/dev/null 2>&1) && userdel www
+
+RUN groupadd -g 263 \
+    && useradd -s /sbin/nologin www -d /var/www/html -g www -u 263 \
+    && apt-get update \
     && DEBIAN_FRONTEND="noninteractive" \
         apt-get install -y php7.0-fpm \
         php7.0-bcmath \
@@ -44,6 +48,10 @@ RUN set -ex \
     && sed -i 's/pm.max_children = 5/pm.max_children = 1000/g' \
         pool.d/www.conf \
     && sed -i 's/;pm.max_requests = 500/pm.max_requests = 50000/g' \
+        pool.d/www.conf \
+    && sed -i 's/listen.owner = www-data/listen.owner = www/g' \
+        pool.d/www.conf \
+    && sed -i 's/listen.group = www-data/listen.group = www/g' \
         pool.d/www.conf \
     && { \
         echo '[global]'; \
