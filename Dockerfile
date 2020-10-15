@@ -10,7 +10,7 @@ USER root
 RUN (id -u www > /dev/null 2>&1) && userdel www ; \
     echo 'done'
 
-RUN groupadd -g 263 \
+RUN groupadd -g 263 www \
     && useradd -s /sbin/nologin www -d /var/www/html -g www -u 263 \
     && apt-get update \
     && DEBIAN_FRONTEND="noninteractive" \
