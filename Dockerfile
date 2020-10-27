@@ -34,15 +34,15 @@ RUN groupadd -g 263 www \
 RUN set -ex \
     && cd /etc/php/7.0/fpm \
     && cat /proc/meminfo | grep Huge \
-    && sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 20M/g' \
+    && sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 10240M/g' \
         php.ini \
-    && sed -i 's/post_max_size = 8M/post_max_size = 25M/g' \
+    && sed -i 's/post_max_size = 8M/post_max_size = 10240M/g' \
         php.ini \
     && sed -i 's/;opcache.file_cache=/opcache.file_cache=\/tmp/g' \
         php.ini \
     && sed -i 's/;opcache.huge_code_pages=1/opcache.huge_code_pages=1/g' \
         php.ini \
-    && sed -i 's/memory_limit = 128M/memory_limit = 512M/g' \
+    && sed -i 's/memory_limit = 128M/memory_limit = 10240M/g' \
         php.ini \
 #    && sed -i 's/pm = dynamic/pm = static/g' \
 #        pool.d/www.conf \
