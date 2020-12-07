@@ -27,7 +27,6 @@ RUN groupadd -g 263 www \
         php7.0-soap \
         php7.0-xml \
         php7.0-zip \
-        php7.0-http \
         --no-install-recommends \
     && mkdir /run/php \
     && rm -rf /var/lib/apt/lists/*
