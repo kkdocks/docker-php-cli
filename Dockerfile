@@ -44,11 +44,11 @@ RUN set -ex \
         php.ini \
     && sed -i 's/memory_limit = 128M/memory_limit = 10240M/g' \
         php.ini \
-#    && sed -i 's/pm = dynamic/pm = static/g' \
-#        pool.d/www.conf \
+    && sed -i 's/pm = dynamic/pm = static/g' \
+        pool.d/www.conf \
     && sed -i 's/pm.max_children = 5/pm.max_children = 1000/g' \
         pool.d/www.conf \
-    && sed -i 's/;pm.max_requests = 500/pm.max_requests = 50000/g' \
+    && sed -i 's/;pm.max_requests = 500/pm.max_requests = 10000/g' \
         pool.d/www.conf \
     && sed -i 's/user = www-data/user = www/g' \
         pool.d/www.conf \
