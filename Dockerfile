@@ -28,8 +28,7 @@ RUN groupadd -g 263 www \
     && rm -rf /var/lib/apt/lists/*
 
 RUN set -ex \
-        \
-    php -r "copy('https://install.phpcomposer.com/installer', 'composer-setup.php');" \
+        && php -r "copy('https://install.phpcomposer.com/installer', 'composer-setup.php');" \
         && php composer-setup.php --no-ansi --install-dir=/usr/local/bin --filename=composer \
         && php -r "unlink('composer-setup.php');" \
         && composer --version
