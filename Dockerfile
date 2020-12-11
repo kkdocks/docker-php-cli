@@ -31,45 +31,6 @@ RUN groupadd -g 263 www \
     && rm -rf /var/lib/apt/lists/*
 
 RUN set -ex \
-    && cd /etc/php/7.0/fpm \
-    && cat /proc/meminfo | grep Huge \
-#    && sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/g' \
-#        php.ini \
-#    && sed -i 's/post_max_size = 8M/post_max_size = 100M/g' \
-#        php.ini \
-#    && sed -i 's/;opcache.file_cache=/opcache.file_cache=\/tmp/g' \
-#        php.ini \
-#    && sed -i 's/;opcache.huge_code_pages=1/opcache.huge_code_pages=1/g' \
-#        php.ini \
-#    && sed -i 's/memory_limit = 128M/memory_limit = 512M/g' \
-#        php.ini \
-#    && sed -i 's/pm = dynamic/pm = static/g' \
-#        pool.d/www.conf \
-#    && sed -i 's/pm.max_children = 5/pm.max_children = 1000/g' \
-#        pool.d/www.conf \
-#    && sed -i 's/;pm.max_requests = 500/pm.max_requests = 10000/g' \
-#        pool.d/www.conf \
-#    && sed -i 's/user = www-data/user = www/g' \
-#        pool.d/www.conf \
-#    && sed -i 's/group = www-data/group = www/g' \
-#        pool.d/www.conf \
-#    && sed -i 's/listen.owner = www-data/listen.owner = www/g' \
-#        pool.d/www.conf \
-#    && sed -i 's/listen.group = www-data/listen.group = www/g' \
-#        pool.d/www.conf \
-    && { \
-        echo '[global]'; \
-        echo 'error_log = /proc/self/fd/2'; \
-        echo; \
-        echo '[www]'; \
-        echo '; if we send this to /proc/self/fd/1, it never appears'; \
-        echo 'access.log = /proc/self/fd/2'; \
-        echo; \
-        echo 'clear_env = no'; \
-        echo; \
-        echo '; Ensure worker stdout and stderr are sent to the main error log.'; \
-        echo 'catch_workers_output = yes'; \
-    } | tee pool.d/docker.conf \
         \
     php -r "copy('https://install.phpcomposer.com/installer', 'composer-setup.php');" \
         && php composer-setup.php --no-ansi --install-dir=/usr/local/bin --filename=composer \
