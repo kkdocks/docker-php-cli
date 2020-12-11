@@ -14,8 +14,7 @@ RUN groupadd -g 263 www \
     && useradd -s /sbin/nologin www -d /var/www/html -g www -u 263 \
     && apt-get update \
     && DEBIAN_FRONTEND="noninteractive" \
-        apt-get install -y php7.0-fpm \
-        php7.0-bcmath \
+        apt-get install -y php7.0-bcmath \
         php7.0-curl \
         php7.0-gd \
         php7.0-intl \
@@ -34,30 +33,30 @@ RUN groupadd -g 263 www \
 RUN set -ex \
     && cd /etc/php/7.0/fpm \
     && cat /proc/meminfo | grep Huge \
-    && sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 10240M/g' \
-        php.ini \
-    && sed -i 's/post_max_size = 8M/post_max_size = 10240M/g' \
-        php.ini \
-    && sed -i 's/;opcache.file_cache=/opcache.file_cache=\/tmp/g' \
-        php.ini \
-    && sed -i 's/;opcache.huge_code_pages=1/opcache.huge_code_pages=1/g' \
-        php.ini \
-    && sed -i 's/memory_limit = 128M/memory_limit = 10240M/g' \
-        php.ini \
-    && sed -i 's/pm = dynamic/pm = static/g' \
-        pool.d/www.conf \
-    && sed -i 's/pm.max_children = 5/pm.max_children = 1000/g' \
-        pool.d/www.conf \
-    && sed -i 's/;pm.max_requests = 500/pm.max_requests = 10000/g' \
-        pool.d/www.conf \
-    && sed -i 's/user = www-data/user = www/g' \
-        pool.d/www.conf \
-    && sed -i 's/group = www-data/group = www/g' \
-        pool.d/www.conf \
-    && sed -i 's/listen.owner = www-data/listen.owner = www/g' \
-        pool.d/www.conf \
-    && sed -i 's/listen.group = www-data/listen.group = www/g' \
-        pool.d/www.conf \
+#    && sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/g' \
+#        php.ini \
+#    && sed -i 's/post_max_size = 8M/post_max_size = 100M/g' \
+#        php.ini \
+#    && sed -i 's/;opcache.file_cache=/opcache.file_cache=\/tmp/g' \
+#        php.ini \
+#    && sed -i 's/;opcache.huge_code_pages=1/opcache.huge_code_pages=1/g' \
+#        php.ini \
+#    && sed -i 's/memory_limit = 128M/memory_limit = 512M/g' \
+#        php.ini \
+#    && sed -i 's/pm = dynamic/pm = static/g' \
+#        pool.d/www.conf \
+#    && sed -i 's/pm.max_children = 5/pm.max_children = 1000/g' \
+#        pool.d/www.conf \
+#    && sed -i 's/;pm.max_requests = 500/pm.max_requests = 10000/g' \
+#        pool.d/www.conf \
+#    && sed -i 's/user = www-data/user = www/g' \
+#        pool.d/www.conf \
+#    && sed -i 's/group = www-data/group = www/g' \
+#        pool.d/www.conf \
+#    && sed -i 's/listen.owner = www-data/listen.owner = www/g' \
+#        pool.d/www.conf \
+#    && sed -i 's/listen.group = www-data/listen.group = www/g' \
+#        pool.d/www.conf \
     && { \
         echo '[global]'; \
         echo 'error_log = /proc/self/fd/2'; \
@@ -71,13 +70,6 @@ RUN set -ex \
         echo '; Ensure worker stdout and stderr are sent to the main error log.'; \
         echo 'catch_workers_output = yes'; \
     } | tee pool.d/docker.conf \
-    && { \
-        echo '[global]'; \
-        echo 'daemonize = no'; \
-        echo; \
-        echo '[www]'; \
-        echo 'listen = 9000'; \
-    } | tee pool.d/zz-docker.conf; \
         \
     php -r "copy('https://install.phpcomposer.com/installer', 'composer-setup.php');" \
         && php composer-setup.php --no-ansi --install-dir=/usr/local/bin --filename=composer \
@@ -87,5 +79,4 @@ RUN set -ex \
 
 WORKDIR /var/www/html
 
-EXPOSE 9000
-CMD ["php-fpm7.0"]
+CMD ["php", "-v"]
