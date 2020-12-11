@@ -1,7 +1,3 @@
-#
-# PHP Dockerfile
-# version 1.1
-#
 FROM registry.youpin-k8s.net/base-repos/ubuntu:v3
 LABEL maintainer="nekoimi <nekoimime@gmail.com>"
 
