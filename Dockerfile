@@ -14,7 +14,8 @@ RUN groupadd -g 263 www \
     && useradd -s /sbin/nologin www -d /var/www/html -g www -u 263 \
     && apt-get update \
     && DEBIAN_FRONTEND="noninteractive" \
-        apt-get install -y php7.0-bcmath \
+        apt-get install -y php7.0 \
+        php7.0-bcmath \
         php7.0-curl \
         php7.0-gd \
         php7.0-intl \
