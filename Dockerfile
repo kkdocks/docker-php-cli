@@ -74,8 +74,7 @@ RUN set -ex \
     php -r "copy('https://install.phpcomposer.com/installer', 'composer-setup.php');" \
         && php composer-setup.php --no-ansi --install-dir=/usr/local/bin --filename=composer \
         && php -r "unlink('composer-setup.php');" \
-        && composer --version \
-        && php -v
+        && composer --version
 
 WORKDIR /var/www/html
 
