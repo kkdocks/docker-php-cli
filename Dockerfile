@@ -1,4 +1,4 @@
-FROM registry.youpin-k8s.net/base-repos/ubuntu:v3
+FROM registry.nekoimi.com/base-repos/ubuntu:v3
 LABEL maintainer="nekoimi <nekoimime@gmail.com>"
 
 USER root
